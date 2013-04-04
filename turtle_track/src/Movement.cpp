@@ -1,5 +1,6 @@
 #include "Movement.h"
 
+//constructor, initialise the speeds
 BotMover::BotMover(ros::NodeHandle nh, double turn_speed, double fast_speed, double init_speed) {
 	vel_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel",1);
 	cruiseSpeed = turn_speed;
@@ -7,6 +8,7 @@ BotMover::BotMover(ros::NodeHandle nh, double turn_speed, double fast_speed, dou
 	last_speed = init_speed;
 }
 
+//send the movement command to the Turtlebot based on road curvature and collission distance
 void BotMover::move(double alpha, int distFromObject) {
 	geometry_msgs::Twist vel; //the movement message
 	double topSpeed;	//the maximum speed based on the situation
@@ -43,15 +45,6 @@ void BotMover::move(double alpha, int distFromObject) {
 			//maintain cruise speed in turn
 			else last_speed = std::min(last_speed * 1.5, topSpeed);
 		}
-		
-		/*/check how much we have to turn, smooth for light turns, faster for hard turns
-		if (alpha > 0 || alpha < -0) vel.angular.z = alpha/-30;
-		if (alpha > 10 || alpha < -10) vel.angular.z = alpha/-27;
-		if (alpha > 20 || alpha < -20) vel.angular.z = alpha/-23;
-		if (alpha > 30 || alpha < -30) vel.angular.z = alpha/-20;
-		if (alpha > 35 ||alpha < -35) vel.angular.z = alpha/-18;
-		if (alpha > 40 ||alpha < -40) vel.angular.z = alpha/-15;
-		if (alpha > 50 ||alpha < -50) vel.angular.z = alpha/-10;*/
 	}
 	//in case the line is lost decelerate
 	else last_speed = std::max(last_speed * 0.65, 0.01);
