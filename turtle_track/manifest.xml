@@ -1,0 +1,20 @@
+<package>
+  <description brief="turtle_track">
+
+     turtle_track
+
+  </description>
+  <author>turtleuser</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/turtle_track</url>
+  <depend package="opencv2"/>
+  <depend package="geometry_msgs"/>
+  <depend package="std_msgs"/>
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+	<rosdep name="boost" />
+
+</package>
+
+
