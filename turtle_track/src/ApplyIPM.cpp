@@ -2,6 +2,7 @@
 
 using namespace cv;
 
+//map one channel of BGR image, used for parallel processing
 void mapB(const Mat& imgIn, Mat& imgOut, const Mat& pixels,
 				const Mat& weights, int nCols, int nRows, int M, int chan) {
 	int pi, pj;
@@ -42,6 +43,7 @@ ApplyIPM:: ApplyIPM(int m, int n) {
 ApplyIPM:: ~ApplyIPM() {
 }
 
+//map a color image
 Mat ApplyIPM::mapBGR(const Mat& imgIn) {
 	Mat imgOut = Mat::zeros(nCols, nRows, CV_8UC3);
 	int pi, pj;
@@ -64,6 +66,7 @@ Mat ApplyIPM::mapBGR(const Mat& imgIn) {
 	return imgOut;
 }
 
+//map a color image using parallel threads for each of the BGR channels
 void ApplyIPM::mapBGRfast(const Mat& imgIn, Mat& imgOut) {
 	//imgOut = Mat::zeros(nCols, nRows, CV_8UC3);
 
@@ -73,6 +76,7 @@ void ApplyIPM::mapBGRfast(const Mat& imgIn, Mat& imgOut) {
 	t0.join(); t1.join(); t2.join();
 }
 
+//map a greyscale image
 Mat ApplyIPM::mapGRAY(const Mat& imgIn) {
 	Mat imgOut = Mat::zeros(nCols, nRows, CV_64F);
 	int pi, pj;
